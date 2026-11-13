@@ -1,0 +1,1079 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pindorama Studio - O Ovo</title>
+
+    <style>
+        /* =========================
+           IDENTIDADE VISUAL
+        ========================= */
+
+        :root {
+            --verde: #1B4A37;
+            --dourado: #B67A2E;
+            --bege: #F4EEDC;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 85px;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--bege);
+            color: var(--verde);
+            overflow-x: hidden;
+        }
+
+        p {
+            font-size: 15px;
+            font-weight: 400;
+            line-height: 1.8;
+        }
+
+        /* =========================
+           MENU DE NAVEGAÇÃO
+        ========================= */
+
+        .menu {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            min-height: 85px;
+            z-index: 1000;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 35px;
+
+            padding: 15px 5%;
+            background-color: var(--verde);
+        }
+
+        .logo-home img {
+            width: 45px;
+            height: 45px;
+            object-fit: contain;
+            display: block;
+            transition: 0.3s;
+        }
+
+        .logo-home:hover img {
+            opacity: 0.75;
+        }
+
+        .menu-links {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .menu a {
+            color: var(--bege);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .menu a:hover {
+            color: var(--dourado);
+        }
+
+        .menu-toggle {
+            display: none;
+        }
+
+        .menu-botao {
+            display: none;
+        }
+
+        /* =========================
+           CONFIGURAÇÃO DAS SEÇÕES
+        ========================= */
+
+        section {
+            min-height: 100vh;
+            padding: 100px 8%;
+            scroll-margin-top: 85px;
+        }
+
+        .claro {
+            background-color: var(--bege);
+            color: var(--verde);
+        }
+
+        .escuro {
+            background-color: var(--verde);
+            color: var(--bege);
+        }
+
+        section h1 {
+            font-size: 36px;
+            font-weight: 600;
+            margin-bottom: 25px;
+        }
+
+        section h1::after {
+            content: "";
+            display: block;
+            width: 55px;
+            height: 3px;
+            background-color: var(--dourado);
+            margin-top: 12px;
+        }
+
+        section h2 {
+            font-size: 26px;
+            margin-bottom: 20px;
+        }
+
+        section p {
+            font-size: 15px;
+            line-height: 1.8;
+        }
+
+        .claro h1,
+        .claro h2,
+        .claro h3 {
+            color: var(--verde);
+        }
+
+        .escuro h1,
+        .escuro h2,
+        .escuro h3,
+        .escuro p {
+            color: var(--bege);
+        }
+
+        .destaque {
+            color: var(--dourado);
+        }
+
+        /* =========================
+           CAPA / HOME
+        ========================= */
+
+        #home {
+            padding: 0;
+            min-height: auto;
+            margin: 0;
+        }
+
+        .home-banner {
+            position: relative;
+            width: 100%;
+            height: calc(100vh - 85px);
+            min-height: 500px;
+            overflow: hidden;
+        }
+
+        .home-banner img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            display: block;
+        }
+
+        .home-banner::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+                90deg,
+                rgba(27, 74, 55, 0.75),
+                rgba(27, 74, 55, 0.15)
+            );
+            pointer-events: none;
+        }
+
+        .home-texto {
+            position: absolute;
+            z-index: 2;
+            left: 8%;
+            right: 8%;
+            bottom: 70px;
+            max-width: 550px;
+            color: var(--bege);
+        }
+
+        .home-texto h1 {
+            font-size: 55px;
+            color: var(--bege);
+            margin-bottom: 8px;
+        }
+
+        .home-texto h1::after {
+            display: none;
+        }
+
+        .home-texto h2 {
+            font-size: 23px;
+            color: var(--dourado);
+            margin-bottom: 15px;
+        }
+
+        .home-texto p {
+            color: var(--bege);
+            font-size: 15px;
+            line-height: 1.7;
+            margin-bottom: 25px;
+        }
+
+        .botao-home {
+            display: inline-block;
+            color: var(--bege);
+            text-decoration: none;
+            border: 1px solid var(--dourado);
+            padding: 12px 22px;
+            font-size: 13px;
+            transition: 0.3s;
+        }
+
+        .botao-home:hover {
+            background-color: var(--dourado);
+            color: var(--bege);
+        }
+
+        /* =========================
+           VÍDEO
+        ========================= */
+
+        #video {
+            min-height: auto;
+            padding: 100px 5%;
+        }
+
+        .video-container {
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .video-container video {
+            display: block;
+            width: 100%;
+            height: auto;
+            aspect-ratio: 16 / 9;
+            object-fit: contain;
+        }
+
+        /* =========================
+           ROTEIRO / PDF
+        ========================= */
+
+        .btn-abrir-pdf {
+            background-color: #111;
+            color: #fff;
+            border: none;
+            padding: 12px 24px;
+            font-size: 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .btn-abrir-pdf:hover {
+            background-color: #333;
+        }
+
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            padding: 15px;
+        }
+
+        .modal-conteudo {
+            position: relative;
+            width: 100%;
+            max-width: 900px;
+            height: 85vh;
+            background: #fff;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+        }
+
+        .modal-conteudo embed {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .btn-fechar {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            background: #ff4d4d;
+            color: white;
+            border: none;
+            font-size: 1.5rem;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            cursor: pointer;
+            z-index: 2010;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn-fechar:hover {
+            background: #cc0000;
+        }
+
+        /* =========================
+           FICHA TÉCNICA
+        ========================= */
+
+        .creditos {
+            line-height: 1.8;
+        }
+
+        .creditos p {
+            margin-bottom: 4px;
+        }
+
+        .creditos h2 {
+            color: var(--dourado);
+            font-size: 17px;
+            font-weight: 600;
+            margin-top: 25px;
+            margin-bottom: 8px;
+        }
+
+        /* =========================
+           GALERIA / BACKSTAGE
+        ========================= */
+
+        .galeria {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-top: 35px;
+        }
+
+        .galeria img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            display: block;
+            border-radius: 4px;
+        }
+
+        /* =========================
+           EQUIPE
+        ========================= */
+
+        .equipe {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 25px;
+            margin-top: 40px;
+        }
+
+        .integrante {
+            text-align: center;
+        }
+
+        .integrante img {
+            width: 180px;
+            max-width: 100%;
+            aspect-ratio: 1 / 1;
+            object-fit: cover;
+            border-radius: 50%;
+            margin-bottom: 15px;
+        }
+
+        .integrante h2 {
+            color: var(--bege);
+            font-size: 18px;
+            margin-bottom: 5px;
+        }
+
+        .integrante span {
+            color: var(--dourado);
+            font-size: 13px;
+        }
+
+        .integrante p {
+            color: var(--bege);
+            font-size: 13px;
+            margin-top: 10px;
+            line-height: 1.6;
+        }
+
+        /* =========================
+           CONTATO
+        ========================= */
+
+        .contatos {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+            margin-top: 40px;
+        }
+
+        .contato-card {
+            background-color: var(--verde);
+            color: var(--bege);
+            padding: 40px 30px;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: 0.3s;
+        }
+
+        .contato-card h2 {
+            color: var(--bege);
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+
+        .contato-card p {
+            color: var(--bege);
+            margin-bottom: 25px;
+        }
+
+        .contato-card span {
+            color: var(--dourado);
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .contato-card:hover {
+            transform: translateY(-5px);
+            background-color: #245B43;
+        }
+
+        /* =========================
+           RODAPÉ
+        ========================= */
+
+        .rodape {
+            background-color: var(--verde);
+            color: var(--bege);
+            text-align: center;
+            padding: 35px 20px;
+        }
+
+        .rodape h2 {
+            color: var(--dourado);
+            font-size: 14px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+        }
+
+        .rodape p {
+            color: var(--bege);
+            font-size: 12px;
+            font-weight: 400;
+        }
+
+        /* =========================
+           TABLETS
+        ========================= */
+
+        @media (max-width: 1000px) {
+
+            .menu {
+                gap: 20px;
+            }
+
+            .menu-links {
+                gap: 18px;
+            }
+
+            .menu a {
+                font-size: 12px;
+            }
+
+            .equipe {
+                grid-template-columns: repeat(2, 1fr);
+                row-gap: 35px;
+            }
+
+            .galeria {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        /* =========================
+           CELULARES
+        ========================= */
+
+        @media (max-width: 768px) {
+
+            /* MENU MOBILE */
+
+            .menu {
+                justify-content: space-between;
+                padding: 10px 5%;
+                min-height: 65px;
+            }
+
+            .logo-home img {
+                width: 40px;
+                height: 40px;
+            }
+
+            .menu-botao {
+                display: flex;
+                flex-direction: column;
+                gap: 6px;
+                cursor: pointer;
+                padding: 8px;
+            }
+
+            .menu-botao span {
+                display: block;
+                width: 26px;
+                height: 2px;
+                background-color: var(--bege);
+                border-radius: 2px;
+            }
+
+            .menu-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background-color: var(--verde);
+                flex-direction: column;
+                align-items: center;
+                gap: 0;
+                padding: 10px 0 20px;
+            }
+
+            .menu-links a {
+                padding: 12px;
+                font-size: 14px;
+            }
+
+            .menu-toggle:checked ~ .menu-links {
+                display: flex;
+            }
+
+            /* SEÇÕES */
+
+            section {
+                padding: 80px 6%;
+                min-height: auto;
+            }
+
+            section h1 {
+                font-size: 28px;
+                margin-bottom: 22px;
+            }
+
+            section h2 {
+                font-size: 22px;
+            }
+
+            section p {
+                font-size: 14px;
+            }
+
+            /* CAPA */
+
+            .home-banner {
+                height: 75vh;
+                min-height: 480px;
+                max-height: 650px;
+            }
+
+            .home-banner img {
+                object-position: center;
+            }
+
+            .home-texto {
+                left: 6%;
+                right: 6%;
+                bottom: 35px;
+                max-width: 100%;
+            }
+
+            .home-texto h1 {
+                font-size: 38px;
+            }
+
+            .home-texto h2 {
+                font-size: 19px;
+            }
+
+            .home-texto p {
+                font-size: 13px;
+                line-height: 1.6;
+                margin-bottom: 20px;
+            }
+
+            .botao-home {
+                padding: 11px 18px;
+                font-size: 12px;
+            }
+
+            /* VÍDEO */
+
+            #video {
+                padding: 80px 5% 50px;
+                min-height: auto;
+            }
+
+            #video h1 {
+                font-size: 27px;
+            }
+
+            /* PDF */
+
+            .modal-conteudo {
+                width: 100%;
+                height: 80vh;
+            }
+
+            /* GALERIA */
+
+            .galeria {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 12px;
+            }
+
+            .galeria img {
+                height: 180px;
+            }
+
+            /* EQUIPE */
+
+            .equipe {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 30px 15px;
+            }
+
+            .integrante img {
+                width: 140px;
+            }
+
+            /* CONTATO */
+
+            .contatos {
+                grid-template-columns: 1fr;
+                gap: 18px;
+            }
+
+            .contato-card {
+                padding: 30px 22px;
+            }
+        }
+
+        /* =========================
+           CELULARES PEQUENOS
+        ========================= */
+
+        @media (max-width: 400px) {
+
+            .home-texto h1 {
+                font-size: 32px;
+            }
+
+            .home-texto h2 {
+                font-size: 17px;
+            }
+
+            .home-texto p {
+                font-size: 12px;
+            }
+
+            .galeria {
+                grid-template-columns: 1fr;
+            }
+
+            .galeria img {
+                height: auto;
+                aspect-ratio: 4 / 3;
+            }
+
+            .equipe {
+                grid-template-columns: 1fr;
+            }
+
+            .integrante img {
+                width: 160px;
+            }
+
+            .btn-abrir-pdf {
+                max-width: 100%;
+                font-size: 14px;
+            }
+        }
+
+    </style>
+</head>
+
+<body>
+
+<header>
+    <nav class="menu">
+
+        <a href="#home" class="logo-home">
+            <img src="logocor.png.png" alt="Página inicial">
+        </a>
+
+        <input type="checkbox" id="menu-toggle" class="menu-toggle">
+
+        <label for="menu-toggle" class="menu-botao" aria-label="Abrir menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </label>
+
+        <div class="menu-links">
+            <a href="#video">Curta-Metragem</a>
+            <a href="#roteiro">Roteiro</a>
+            <a href="#ficha-tecnica">Ficha técnica</a>
+            <a href="#backstage">Backstage</a>
+            <a href="#quem-somos">Quem somos</a>
+            <a href="#contato">Vamos conversar?</a>
+        </div>
+
+    </nav>
+</header>
+
+<main>
+
+
+    <section id="home" class="claro">
+
+        <div class="home-banner">
+
+            <img src="capa.jpg.jpg" alt="Catharina">
+
+            <div class="home-texto">
+
+                <h1>O OVO</h1>
+
+                <h2>Qual o sentido da vida?</h2>
+
+                <p class="sinopse-home">
+                    Após despertar em um parque silencioso,</br>
+                    Catharina se vê na presença de uma figura </br>
+                    misteriosa que a faz pensar sobre a vida e a</br>
+                    morte e percebe que sua existência é muito</br>
+                    maior do que ela imaginava.
+                </p>
+
+                <a href="#video" class="botao-home">
+                    ASSISTA AO FILME
+                </a>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <section id="video" class="escuro">
+
+        <h1>Curta-Metragem</h1>
+
+        <div class="video-container">
+
+            <video controls>
+                <source src="OvoFinal.mp4.mp4" type="video/mp4">
+               
+            </video>
+
+        </div>
+
+    </section>
+
+
+
+    <section id="roteiro" class="claro">
+
+        <h1>Roteiro</h1>
+
+        <button class="btn-abrir-pdf" onclick="abrirModal()">
+            Ver Documento PDF
+        </button>
+
+        <div id="modalPdf" class="modal-overlay">
+
+            <div class="modal-conteudo">
+
+                <button class="btn-fechar" onclick="fecharModal()" aria-label="Fechar PDF">
+                    &times;
+                </button>
+
+                <embed src="ROTEIRO - O OVO.pdf" type="application/pdf">
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <section id="ficha-tecnica" class="escuro">
+
+        <h1>Ficha Técnica</h1>
+
+        <div class="creditos">
+
+            <p>Projeto Audiovisual: O Ovo</p>
+            <p>Formato: Curta-metragem de ficção e drama</p>
+            <p>Duração: 07:59</p>
+            <p>Ano: 2026</p>
+
+            <h2>PRODUÇÃO</h2>
+
+            <p>Produtora: Camila Avian</p>
+            <p>Produção executiva: Raissa Lopes</p>
+            <p>Assistentes de Produção: Raissa Lopes, Beatriz Facunde, Keliane Silva, Rayane Lopes e Caio Andreozi.</p>
+            <p>Adaptação e Roteiro: Camila Avian</p>
+
+            <h2>DIREÇÃO</h2>
+
+            <p>Direção: Camila Avian</p>
+            <p>Assistente de Direção: Beatriz Facunde</p>
+
+            <h2>ELENCO</h2>
+
+            <p>Catharina: Aretha Alvor</p>
+            <p>Deus: Yasmin de Almeida</p>
+
+            <h2>DIREÇÃO DE ARTE E FIGURINO</h2>
+
+            <p>Direção de Arte: Beatriz Facunde e Keliane Silva.</p>
+            <p>Figurino: Keliane Silva</p>
+
+            <h2>FOTOGRAFIA E CÂMERA</h2>
+
+            <p>Operação de câmera: Camila Avian</p>
+
+            <h2>SOM</h2>
+
+            <p>Captação de Áudio: Raissa Lopes e Keliane Silva</p>
+
+            <h2>PÓS-PRODUÇÃO</h2>
+
+            <p>Edição: Camila Avian</p>
+
+            <h2>DESENVOLVIMENTO VISUAL</h2>
+
+            <p>Moodboard: Keliane Silva</p>
+
+            <h2>AGRADECIMENTOS</h2>
+
+            <p>SPFilm</p>
+            <p>Parque do Carmo</p>
+
+        </div>
+
+    </section>
+
+
+    <section id="backstage" class="claro">
+
+        <h1>Backstage</h1>
+
+        <p>Um pouco dos bastidores da nossa produção.</p>
+
+        <div class="galeria">
+
+            <img src="1.jpeg" alt="Equipe chegando para gravação">
+            <img src="2.jpeg" alt="Equipe preparando equipamentos">
+            <img src="3.jpeg" alt="Preparação das cenas">
+            <img src="4.jpeg" alt="Momento das gravações">
+            <img src="5.jpeg" alt="Momento das gravações">
+            <img src="6.jpeg" alt="Atrizes gravando">
+            <img src="7.jpeg" alt="Passando o texto">
+            <img src="8.jpeg" alt="Ouvindo os diálogos gravados">
+            <img src="9.jpeg" alt="Preparando os gravadores">
+            <img src="10.jpeg" alt="Estabilizando Gimbal">
+            <img src="11.jpeg" alt="Equipe nos bastidores">
+            <img src="12.jpeg" alt="Atrizes se preparando">
+            <img src="13.jpeg" alt="Ouvindo diálogos gravados">
+            <img src="14.jpeg" alt="Equipe nos bastidores">
+            <img src="15.jpeg" alt="Equipe nos bastidores">
+            <img src="16.jpeg" alt="Equipe nos bastidores">
+            <img src="17.jpeg" alt="Utilizando a lapela">
+            <img src="18.jpeg" alt="Equipe nos bastidores">
+            <img src="19.jpeg" alt="Momento da gravação">
+            <img src="20.jpeg" alt="Momento da gravação">
+            <img src="21.jpeg" alt="Equipe nos bastidores">
+            <img src="22.jpeg" alt="Momento da gravação">
+            <img src="23.jpeg" alt="Equipe nos bastidores">
+            <img src="24.jpeg" alt="Momento da gravação">
+            <img src="25.jpeg" alt="Momento da gravação">
+            <img src="26.jpeg" alt="Momento da gravação">
+            <img src="27.jpeg" alt="Momento da gravação">
+            <img src="28.jpeg" alt="Momento da gravação">
+            <img src="29.jpeg" alt="Momento da gravação">
+            <img src="30.jpeg" alt="Momento da gravação">
+            <img src="31.jpeg" alt="Equipe nos bastidores">
+            <img src="32.jpeg" alt="Momento da gravação">
+            <img src="33.jpeg" alt="Caminho do Parque do Carmo">
+            <img src="34.jpeg" alt="Equipamentos de gravação">
+            <img src="35.jpeg" alt="Parque do Carmo">
+            <img src="36.jpeg" alt="Parque do Carmo">
+            <img src="37.jpeg" alt="Parque do Carmo">
+            <img src="38.jpeg" alt="Parque do Carmo">
+            <img src="39.jpg" alt="Atrizes - Aretha e Yasmin">
+
+        </div>
+
+    </section>
+
+
+    <section id="quem-somos" class="escuro">
+
+        <h1>Quem Somos</h1>
+
+        <p>
+            A Pindorama Studio nasceu do desejo de transformar imagens em pontes entre
+            culturas, tempos e vozes. Inspirada no nome real do Brasil Pindorama, “terra das palmeiras”,
+            nossa produtora carrega o propósito de resgatar e trazer as raízes e memórias que moldam
+            nossa identidade coletiva.
+            No mundo onde as narrativas visuais moldam percepções e constroem realidades,
+            acreditamos que o audiovisual é mais do que arte: é um instrumento de reconexão, resistência
+            e celebração da diversidade humana.
+        </p>
+
+        <div class="equipe">
+
+            <div class="integrante">
+                <img src="camila.jpeg" alt="Camila Avian">
+                <h2>Camila Avian</h2>
+                <span>35 anos</span>
+                <p>Direção, Filmagem e Edição</p>
+            </div>
+
+            <div class="integrante">
+                <img src="keliane.jpeg" alt="Keliane Silva">
+                <h2>Keliane Silva</h2>
+                <span>28 anos</span>
+                <p>Figurino e Som</p>
+            </div>
+
+            <div class="integrante">
+                <img src="raissa.jpg" alt="Raissa Souza">
+                <h2>Raissa Souza</h2>
+                <span>20 anos</span>
+                <p>Produção e Som</p>
+            </div>
+
+            <div class="integrante">
+                <img src="beatriz.jpeg" alt="Beatriz Facunde">
+                <h2>Beatriz Facunde</h2>
+                <span>29 anos</span>
+                <p>Produção e Arte</p>
+            </div>
+
+        </div>
+
+    </section>
+
+    <section id="contato" class="claro">
+
+        <h1>Vamos conversar?</h1>
+
+        <p>
+            Acompanhe o Pindorama Studio e conheça
+            nossos projetos audiovisuais.
+        </p>
+
+        <div class="contatos">
+
+            <a href="https://www.instagram.com/Pindoramastudio.br"
+               target="_blank"
+               rel="noopener noreferrer"
+               class="contato-card">
+
+                <h2>Instagram</h2>
+                <p>Acompanhe nossos bastidores :)</p>
+                <span>VISITE NOSSO INSTAGRAM ↗</span>
+
+            </a>
+
+            <a href="https://www.youtube.com/@Pindoramastudiobr"
+               target="_blank"
+               rel="noopener noreferrer"
+               class="contato-card">
+
+                <h2>YouTube</h2>
+                <p>Assista às nossas produções audiovisuais.</p>
+                <span>ACESSE NOSSO CANAL ↗</span>
+
+            </a>
+
+        </div>
+
+    </section>
+
+</main>
+
+<footer class="rodape">
+
+    <h2>PINDORAMA STUDIO © 2026</h2>
+    <p>Perspectivas nativas, horizontes infinitos.</p>
+
+</footer>
+
+<script>
+    function abrirModal() {
+        document.getElementById('modalPdf').style.display = 'flex';
+    }
+
+    function fecharModal() {
+        document.getElementById('modalPdf').style.display = 'none';
+    }
+
+    // Fecha o PDF ao clicar fora da janela.
+
+    window.addEventListener('click', function(event) {
+        const modal = document.getElementById('modalPdf');
+
+        if (event.target === modal) {
+            fecharModal();
+        }
+    });
+
+    // Fecha o PDF ao apertar ESC.
+
+    window.addEventListener('keydown', function(event) {
+        if (event.key === 'Escape') {
+            fecharModal();
+        }
+    });
+
+    // Fecha o menu mobile depois de selecionar uma seção.
+
+    document.querySelectorAll('.menu-links a').forEach(function(link) {
+        link.addEventListener('click', function() {
+            document.getElementById('menu-toggle').checked = false;
+        });
+    });
+</script>
+
+</body>
+</html>
